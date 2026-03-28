@@ -33,6 +33,7 @@ final class FuncionarioController
         if ($method === 'POST') {
             $nome = trim((string) ($body['nome'] ?? ''));
             $cpf = trim((string) ($body['cpf'] ?? ''));
+            $cpf = preg_replace('/\D/', '', $cpf) ?? '';
             $dataNascimento = trim((string) ($body['data_nascimento'] ?? ''));
             $salario = (float) ($body['salario'] ?? 0);
             $cargoId = (int) ($body['cargo_id'] ?? 0);
