@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargos</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Cadastro de Cargos</h1>
+    <nav>
+      <a href="index.html">Menu</a>
+      <a href="funcionarios.html">Funcionarios</a>
+      <a href="relatorio.html">Relatorio</a>
+    </nav>
+
+    <div class="card">
+      <h2>Novo Cargo</h2>
+      <form id="cargo-form">
+        <div class="form-row">
+          <input type="text" id="nome" placeholder="Nome do Cargo *" required>
+          <input type="text" id="descricao" placeholder="Descricao (opcional)">
+        </div>
+        <button type="submit">Salvar Cargo</button>
+      </form>
+      <div id="cargo-message" class="message"></div>
+    </div>
+
+    <div class="card">
+      <h2>Pesquisar Cargos</h2>
+      <div class="form-row">
+        <input type="text" id="busca-cargo" placeholder="Pesquisar por nome">
+        <button id="btn-buscar-cargo">Pesquisar</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descricao</th>
+          </tr>
+        </thead>
+        <tbody id="cargos-body"></tbody>
+      </table>
+    </div>
+  </div>
+  <script src="js/cargo.js"></script>
+</body>
+</html>
+

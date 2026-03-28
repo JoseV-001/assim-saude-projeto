@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /backend/
+
+    # Não reescreva arquivos e diretórios existentes
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Redirecione todas as requisições para index.php
+    RewriteRule ^(.*)$ index.php?$1 [QSA,L]
+</IfModule>
+

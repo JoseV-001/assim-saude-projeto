@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatorio</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Relatorio de Funcionarios</h1>
+    <nav>
+      <a href="index.html">Menu</a>
+      <a href="cargos.html">Cargos</a>
+      <a href="funcionarios.html">Funcionarios</a>
+    </nav>
+
+    <div class="card">
+      <h2>Filtros</h2>
+      <div class="form-row">
+        <input type="text" id="filtro-nome" placeholder="Filtrar por nome">
+        <input type="text" id="filtro-cargo" placeholder="Filtrar por cargo">
+        <button id="btn-filtrar">Filtrar</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Relatorio</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Cargo</th>
+            <th>Salario</th>
+          </tr>
+        </thead>
+        <tbody id="relatorio-body"></tbody>
+      </table>
+    </div>
+  </div>
+  <script src="js/relatorio.js"></script>
+</body>
+</html>
+

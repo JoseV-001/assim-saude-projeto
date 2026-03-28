@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: assim-saude-app
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: assim_saude
+      DB_USER: root
+      DB_PASS: root
+    volumes:
+      - ../:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: assim-saude-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: assim_saude
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ../database.sql:/docker-entrypoint-initdb.d/database.sql
+
+volumes:
+  mysql_data:
+

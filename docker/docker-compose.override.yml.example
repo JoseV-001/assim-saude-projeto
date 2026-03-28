@@ -1,0 +1,12 @@
+# Arquivo docker-compose.override.yml (EXEMPLO)
+# Copie este arquivo como docker-compose.override.yml para usar em desenvolvimento local
+# Este arquivo não será commitado no Git
+
+version: '3.9'
+
+services:
+  app:
+    # Adicione portas extras para debugging se necessário
+    environment:
+      - PHP_IDE_CONFIG=serverName=localhost
+
