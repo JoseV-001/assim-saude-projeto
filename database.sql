@@ -27,4 +27,3 @@ CREATE TABLE IF NOT EXISTS funcionarios (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_funcionario_cargo FOREIGN KEY (cargo_id) REFERENCES cargos(id)
 );
-

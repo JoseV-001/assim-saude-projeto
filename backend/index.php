@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Config\Database;
+use App\Config\SchemaUpdater;
 use App\Controllers\CargoController;
 use App\Controllers\FuncionarioController;
 use App\Controllers\RelatorioController;
@@ -23,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 try {
     $connection = Database::getConnection();
+    SchemaUpdater::ensureFuncionarioColumns($connection);
+
     $cargoRepository = new CargoRepository($connection);
     $funcionarioRepository = new FuncionarioRepository($connection);
 
