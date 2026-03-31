@@ -70,7 +70,7 @@ sistema-assim-saude/
 1. Clonar o repositorio:
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/SEU-USUARIO/assim-saude-projeto.git
 ```
 
 2. Acessar a pasta do projeto:
@@ -85,6 +85,8 @@ cd sistema-assim-saude
 cd docker
 docker compose up --build
 ```
+
+Apos subir os containers, aguarde alguns segundos para o banco de dados inicializar completamente antes de acessar o sistema.
 
 4. Acessar no navegador:
 
@@ -136,3 +138,18 @@ docker compose up --build
 - Relatorio com filtros implementado
 - Validacoes principais de negocio implementadas
 - Projeto pronto para execucao em ambiente Docker
+
+## Dados iniciais
+
+O sistema ja inicia com dados de exemplo:
+
+- 10 cargos
+- 50 funcionarios
+
+Isso permite testar todas as funcionalidades sem necessidade de cadastro manual.
+
+## Problemas comuns
+
+- Porta 8080 ja em uso -> altere no `docker-compose.yml`
+- Docker nao iniciado -> inicie o Docker Desktop
+- Erro de conexao com banco -> aguarde alguns segundos e recarregue a pagina
