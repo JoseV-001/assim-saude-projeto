@@ -32,8 +32,7 @@ final class FuncionarioController
 
         if ($method === 'POST') {
             $nome = trim((string) ($body['nome'] ?? ''));
-            $cpf = trim((string) ($body['cpf'] ?? ''));
-            $cpf = preg_replace('/\D/', '', $cpf) ?? '';
+            $cpf = CpfValidator::normalize((string) ($body['cpf'] ?? ''));
             $dataNascimento = trim((string) ($body['data_nascimento'] ?? ''));
             $salario = (float) ($body['salario'] ?? 0);
             $cargoId = (int) ($body['cargo_id'] ?? 0);
@@ -51,12 +50,16 @@ final class FuncionarioController
                 return [422, ['error' => 'Nome do funcionario e obrigatorio.']];
             }
 
+            if (strlen($cpf) !== 11) {
+                return [422, ['error' => 'CPF deve conter 11 dígitos']];
+            }
+
             if (!CpfValidator::isValid($cpf)) {
-                return [422, ['error' => 'CPF invalido.']];
+                return [422, ['error' => 'CPF inválido']];
             }
 
             if ($this->repository->cpfExists($cpf)) {
-                return [409, ['error' => 'CPF ja cadastrado.']];
+                return [409, ['error' => 'CPF já cadastrado']];
             }
 
             if (!DateValidator::isValid($dataNascimento)) {
@@ -96,7 +99,7 @@ final class FuncionarioController
             } catch (PDOException $e) {
                 if (strpos($e->getMessage(), 'UNIQUE constraint failed') !== false || 
                     strpos($e->getMessage(), 'Duplicate entry') !== false) {
-                    return [409, ['error' => 'CPF ja cadastrado.']];
+                    return [409, ['error' => 'CPF já cadastrado']];
                 }
                 throw $e;
             }
@@ -105,8 +108,7 @@ final class FuncionarioController
         if ($method === 'PUT') {
             $id = isset($params['id']) ? (int) $params['id'] : 0;
             $nome = trim((string) ($body['nome'] ?? ''));
-            $cpf = trim((string) ($body['cpf'] ?? ''));
-            $cpf = preg_replace('/\D/', '', $cpf) ?? '';
+            $cpf = CpfValidator::normalize((string) ($body['cpf'] ?? ''));
             $dataNascimento = trim((string) ($body['data_nascimento'] ?? ''));
             $salario = (float) ($body['salario'] ?? 0);
             $cargoId = (int) ($body['cargo_id'] ?? 0);
@@ -128,8 +130,12 @@ final class FuncionarioController
                 return [422, ['error' => 'Nome do funcionario e obrigatorio.']];
             }
 
+            if (strlen($cpf) !== 11) {
+                return [422, ['error' => 'CPF deve conter 11 dígitos']];
+            }
+
             if (!CpfValidator::isValid($cpf)) {
-                return [422, ['error' => 'CPF invalido.']];
+                return [422, ['error' => 'CPF inválido']];
             }
 
             if (!DateValidator::isValid($dataNascimento)) {
@@ -169,7 +175,7 @@ final class FuncionarioController
             } catch (PDOException $e) {
                 if (strpos($e->getMessage(), 'UNIQUE constraint failed') !== false || 
                     strpos($e->getMessage(), 'Duplicate entry') !== false) {
-                    return [409, ['error' => 'CPF ja cadastrado.']];
+                    return [409, ['error' => 'CPF já cadastrado']];
                 }
                 throw $e;
             }

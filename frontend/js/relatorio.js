@@ -9,6 +9,21 @@ function formatarValor(valor) {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
 }
 
+function formatarTelefone(telefone) {
+  if (telefone === null || telefone === undefined || telefone === '') {
+    return '-';
+  }
+
+  const valorOriginal = String(telefone);
+  const numeros = valorOriginal.replace(/\D/g, '');
+
+  if (numeros.length === 11) {
+    return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 7)}-${numeros.slice(7)}`;
+  }
+
+  return valorOriginal;
+}
+
 async function carregarRelatorio() {
   const nome = filtroNome.value.trim();
   const cargo = filtroCargo.value.trim();
@@ -29,7 +44,7 @@ async function carregarRelatorio() {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>${item.nome}</td>
-      <td>${item.telefone || '-'}</td>
+      <td>${formatarTelefone(item.telefone)}</td>
       <td>${item.cargo_nome}</td>
       <td>${formatarValor(item.salario)}</td>
     `;
@@ -40,4 +55,3 @@ async function carregarRelatorio() {
 btnFiltrar.addEventListener('click', carregarRelatorio);
 
 carregarRelatorio();
-

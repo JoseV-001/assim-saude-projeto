@@ -57,9 +57,9 @@ try {
     http_response_code($status);
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 } catch (\Throwable $exception) {
+    error_log('Erro não tratado: ' . $exception->getMessage() . ' - ' . $exception->getFile() . ':' . $exception->getLine());
     http_response_code(500);
     echo json_encode([
         'error' => 'Erro interno no servidor.',
-        'details' => $exception->getMessage(),
     ], JSON_UNESCAPED_UNICODE);
 }

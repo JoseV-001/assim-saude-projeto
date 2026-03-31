@@ -66,6 +66,14 @@ final class CargoRepository
         ]);
     }
 
+    public function hasEmployees(int $id): bool
+    {
+        $statement = $this->connection->prepare('SELECT 1 FROM funcionarios WHERE cargo_id = :id LIMIT 1');
+        $statement->execute(['id' => $id]);
+
+        return (bool) $statement->fetchColumn();
+    }
+
     public function delete(int $id): void
     {
         $statement = $this->connection->prepare('DELETE FROM cargos WHERE id = :id');

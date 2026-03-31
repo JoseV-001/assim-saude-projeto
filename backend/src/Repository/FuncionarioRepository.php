@@ -29,8 +29,8 @@ final class FuncionarioRepository
 
         if ($cpf !== null && $cpf !== '') {
             $cpf = preg_replace('/\D/', '', $cpf) ?? '';
-            $query .= ' AND f.cpf = :cpf';
-            $params['cpf'] = $cpf;
+            $query .= ' AND f.cpf LIKE :cpf';
+            $params['cpf'] = '%' . $cpf . '%';
         }
 
         if ($cargoId !== null) {

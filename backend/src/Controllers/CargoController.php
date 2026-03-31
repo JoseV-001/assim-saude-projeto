@@ -27,13 +27,17 @@ final class CargoController
             $descricao = isset($body['descricao']) ? trim((string) $body['descricao']) : null;
 
             if ($nome === '') {
-                return [422, ['error' => 'Nome do cargo e obrigatorio.']];
+                return [422, ['error' => 'Nome do cargo é obrigatório.']];
             }
 
-            $cargo = new Cargo(null, $nome, $descricao !== '' ? $descricao : null);
-            $id = $this->repository->create($cargo);
-
-            return [201, ['message' => 'Cargo criado com sucesso.', 'id' => $id]];
+            try {
+                $cargo = new Cargo(null, $nome, $descricao !== '' ? $descricao : null);
+                $id = $this->repository->create($cargo);
+                return [201, ['message' => 'Cargo criado com sucesso.', 'id' => $id]];
+            } catch (\Throwable $exception) {
+                error_log('Erro ao criar cargo: ' . $exception->getMessage());
+                return [500, ['error' => 'Erro ao criar cargo. Tente novamente.']];
+            }
         }
 
         if ($method === 'PUT') {
@@ -42,29 +46,49 @@ final class CargoController
             $descricao = isset($body['descricao']) ? trim((string) $body['descricao']) : null;
 
             if ($id <= 0) {
-                return [422, ['error' => 'ID do cargo invalido.']];
+                return [400, ['error' => 'ID do cargo é obrigatório e deve ser um número válido.']];
             }
 
             if ($nome === '') {
-                return [422, ['error' => 'Nome do cargo e obrigatorio.']];
+                return [422, ['error' => 'Nome do cargo é obrigatório.']];
             }
 
-            $cargo = new Cargo($id, $nome, $descricao !== '' ? $descricao : null);
-            $this->repository->update($cargo);
+            if (!$this->repository->existsById($id)) {
+                return [404, ['error' => 'Cargo não encontrado.']];
+            }
 
-            return [200, ['message' => 'Cargo atualizado com sucesso.']];
+            try {
+                $cargo = new Cargo($id, $nome, $descricao !== '' ? $descricao : null);
+                $this->repository->update($cargo);
+                return [200, ['message' => 'Cargo atualizado com sucesso.']];
+            } catch (\Throwable $exception) {
+                error_log('Erro ao atualizar cargo ID ' . $id . ': ' . $exception->getMessage());
+                return [500, ['error' => 'Erro ao atualizar cargo. Tente novamente.']];
+            }
         }
 
         if ($method === 'DELETE') {
             $id = isset($params['id']) ? (int) $params['id'] : 0;
 
             if ($id <= 0) {
-                return [422, ['error' => 'ID do cargo invalido.']];
+                return [400, ['error' => 'ID do cargo é obrigatório e deve ser um número válido.']];
             }
 
-            $this->repository->delete($id);
+            if (!$this->repository->existsById($id)) {
+                return [404, ['error' => 'Cargo não encontrado.']];
+            }
 
-            return [200, ['message' => 'Cargo deletado com sucesso.']];
+            if ($this->repository->hasEmployees($id)) {
+                return [409, ['error' => 'Não é possível excluir cargo vinculado a funcionários.']];
+            }
+
+            try {
+                $this->repository->delete($id);
+                return [200, ['message' => 'Cargo removido com sucesso.']];
+            } catch (\Throwable $exception) {
+                error_log('Erro ao deletar cargo ID ' . $id . ': ' . $exception->getMessage());
+                return [500, ['error' => 'Erro ao remover cargo. Tente novamente.']];
+            }
         }
 
         return [405, ['error' => 'Metodo nao permitido.']];
