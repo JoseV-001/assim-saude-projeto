@@ -82,6 +82,37 @@ final class FuncionarioRepository
         return (bool) $statement->fetchColumn();
     }
 
+    public function update(Funcionario $funcionario): void
+    {
+        $statement = $this->connection->prepare(
+            'UPDATE funcionarios SET nome = :nome, cpf = :cpf, data_nascimento = :data_nascimento, salario = :salario, cargo_id = :cargo_id, cep = :cep, logradouro = :logradouro, numero = :numero, complemento = :complemento, bairro = :bairro, municipio = :municipio, uf = :uf, email = :email, telefone = :telefone WHERE id = :id'
+        );
+
+        $statement->execute([
+            'id' => $funcionario->id,
+            'nome' => $funcionario->nome,
+            'cpf' => $funcionario->cpf,
+            'data_nascimento' => $funcionario->dataNascimento,
+            'salario' => $funcionario->salario,
+            'cargo_id' => $funcionario->cargoId,
+            'cep' => $funcionario->cep,
+            'logradouro' => $funcionario->logradouro,
+            'numero' => $funcionario->numero,
+            'complemento' => $funcionario->complemento,
+            'bairro' => $funcionario->bairro,
+            'municipio' => $funcionario->municipio,
+            'uf' => $funcionario->uf,
+            'email' => $funcionario->email,
+            'telefone' => $funcionario->telefone,
+        ]);
+    }
+
+    public function delete(int $id): void
+    {
+        $statement = $this->connection->prepare('DELETE FROM funcionarios WHERE id = :id');
+        $statement->execute(['id' => $id]);
+    }
+
     public function report(?string $name = null, ?string $cargo = null): array
     {
         $query = 'SELECT f.nome, f.cpf, f.data_nascimento, f.salario, c.nome AS cargo_nome, f.telefone

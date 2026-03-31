@@ -52,5 +52,24 @@ final class CargoRepository
 
         return (bool) $statement->fetchColumn();
     }
+
+    public function update(Cargo $cargo): void
+    {
+        $statement = $this->connection->prepare(
+            'UPDATE cargos SET nome = :nome, descricao = :descricao WHERE id = :id'
+        );
+
+        $statement->execute([
+            'id' => $cargo->id,
+            'nome' => $cargo->nome,
+            'descricao' => $cargo->descricao,
+        ]);
+    }
+
+    public function delete(int $id): void
+    {
+        $statement = $this->connection->prepare('DELETE FROM cargos WHERE id = :id');
+        $statement->execute(['id' => $id]);
+    }
 }
 

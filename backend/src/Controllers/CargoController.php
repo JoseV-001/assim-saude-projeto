@@ -36,6 +36,37 @@ final class CargoController
             return [201, ['message' => 'Cargo criado com sucesso.', 'id' => $id]];
         }
 
+        if ($method === 'PUT') {
+            $id = isset($params['id']) ? (int) $params['id'] : 0;
+            $nome = trim((string) ($body['nome'] ?? ''));
+            $descricao = isset($body['descricao']) ? trim((string) $body['descricao']) : null;
+
+            if ($id <= 0) {
+                return [422, ['error' => 'ID do cargo invalido.']];
+            }
+
+            if ($nome === '') {
+                return [422, ['error' => 'Nome do cargo e obrigatorio.']];
+            }
+
+            $cargo = new Cargo($id, $nome, $descricao !== '' ? $descricao : null);
+            $this->repository->update($cargo);
+
+            return [200, ['message' => 'Cargo atualizado com sucesso.']];
+        }
+
+        if ($method === 'DELETE') {
+            $id = isset($params['id']) ? (int) $params['id'] : 0;
+
+            if ($id <= 0) {
+                return [422, ['error' => 'ID do cargo invalido.']];
+            }
+
+            $this->repository->delete($id);
+
+            return [200, ['message' => 'Cargo deletado com sucesso.']];
+        }
+
         return [405, ['error' => 'Metodo nao permitido.']];
     }
 }

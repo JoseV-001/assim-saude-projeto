@@ -73,21 +73,64 @@ php -S localhost:8080
 
 - `GET /backend/index.php?resource=cargos&q=texto`
 - `POST /backend/index.php?resource=cargos`
+- `PUT /backend/index.php?resource=cargos&id=1`
+- `DELETE /backend/index.php?resource=cargos&id=1`
 - `GET /backend/index.php?resource=funcionarios&nome=texto&cpf=12345678901`
 - `POST /backend/index.php?resource=funcionarios`
+- `PUT /backend/index.php?resource=funcionarios&id=1`
+- `DELETE /backend/index.php?resource=funcionarios&id=1`
 - `GET /backend/index.php?resource=relatorio&nome=texto&cargo=texto`
+
+## Funcionalidades
+
+### Tela de Cargos
+- ✅ Criar novo cargo
+- ✅ Pesquisar cargo por nome
+- ✅ Editar cargo (selecione na tabela)
+- ✅ Deletar cargo
+- ✅ Validacao obrigatoria de nome
+
+### Tela de Funcionarios
+- ✅ Criar novo funcionario
+- ✅ Pesquisar por nome e/ou CPF
+- ✅ Editar funcionario (selecione na tabela)
+- ✅ Deletar funcionario
+- ✅ Completo cadastro de endereco
+- ✅ Selecionar cargo na lista (combo box)
+- ✅ Campos opcionais: email, telefone, complemento, cep, logradouro, numero, bairro, municipio, uf
+
+### Tela de Relatorio
+- ✅ Exibir todos os funcionarios
+- ✅ Filtrar por nome
+- ✅ Filtrar por cargo
+- ✅ Mostrar: Nome, Telefone, Cargo e Salario
+
+### Dados Iniciais
+- ✅ 5 cargos pre-cadastrados
+- ✅ 10 funcionarios com dados completos
+- ✅ Todos com CPF validado
 
 ## Regras de negocio implementadas
 
-- CPF valido
-- CPF unico (nao permite duplicado)
-- Data de nascimento valida (`YYYY-MM-DD`)
-- Nome obrigatorio
-- Salario maior que zero
-- Cargo obrigatorio e existente
+- ✅ CPF valido (com validacao de digitos verificadores)
+- ✅ CPF unico (nao permite duplicado)
+- ✅ Data de nascimento valida (`YYYY-MM-DD`)
+- ✅ Nome obrigatorio
+- ✅ Salario maior que zero
+- ✅ Cargo obrigatorio e existente
+- ✅ Nao permitir CPF inválido
+- ✅ Nao permitir 2 funcionarios com mesmo CPF
+- ✅ Nao permitir data de nascimento inválida
 
 ## Status
 
+- ✅ CRUD completo (Create, Read, Update, Delete)
+- ✅ Validacao robusta de CPF com algoritmo correto
+- ✅ Dados iniciais populados
+- ✅ Frontend com tabelas interativas (clique para editar)
+- ✅ Relatorio com filtros
 - ✅ Documentacao essencial organizada
 - ✅ Projeto pronto para execucao com Docker
 - ❌ Nao inclui autenticacao de usuarios
+
+
