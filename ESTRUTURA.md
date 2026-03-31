@@ -3,25 +3,28 @@
 ```text
 sistema-assim-saude/
 ├── backend/
-│   ├── index.php
-│   ├── composer.json
 │   ├── .htaccess
-│   └── src/
-│       ├── Config/
-│       │   └── Database.php
-│       ├── Models/
-│       │   ├── Cargo.php
-│       │   └── Funcionario.php
-│       ├── Controllers/
-│       │   ├── CargoController.php
-│       │   ├── FuncionarioController.php
-│       │   └── RelatorioController.php
-│       ├── Repository/
-│       │   ├── CargoRepository.php
-│       │   └── FuncionarioRepository.php
-│       └── Utils/
-│           ├── CpfValidator.php
-│           └── DateValidator.php
+│   ├── composer.json
+│   ├── composer.lock
+│   ├── index.php
+│   ├── src/
+│   │   ├── Config/
+│   │   │   ├── Database.php
+│   │   │   └── SchemaUpdater.php
+│   │   ├── Controllers/
+│   │   │   ├── CargoController.php
+│   │   │   ├── FuncionarioController.php
+│   │   │   └── RelatorioController.php
+│   │   ├── Models/
+│   │   │   ├── Cargo.php
+│   │   │   └── Funcionario.php
+│   │   ├── Repository/
+│   │   │   ├── CargoRepository.php
+│   │   │   └── FuncionarioRepository.php
+│   │   └── Utils/
+│   │       ├── CpfValidator.php
+│   │       └── DateValidator.php
+│   └── vendor/
 ├── frontend/
 │   ├── index.html
 │   ├── cargos.html
@@ -36,22 +39,26 @@ sistema-assim-saude/
 ├── docker/
 │   ├── Dockerfile
 │   ├── docker-compose.yml
+│   ├── docker-compose.override.yml.example
 │   ├── limpar-banco.bat
 │   └── limpar-banco.sh
+├── .env.example
+├── .gitignore
 ├── database.sql
+├── iniciar.bat
+├── iniciar.sh
 ├── README.md
-├── QUICKSTART.md
 └── ESTRUTURA.md
 ```
 
 ## Responsabilidades por camada
 
-- Backend (`backend/src`): regras de negocio, validacoes, acesso ao banco e roteamento da API
-- Frontend (`frontend`): telas HTML, estilo CSS e chamadas da API em JavaScript
-- Docker (`docker`): ambiente local de execucao da aplicacao e banco
+- Backend (`backend/src`): regras de negocio, validacoes, roteamento da API e acesso a dados com PDO
+- Frontend (`frontend`): telas HTML, estilo CSS e consumo da API via JavaScript
+- Docker (`docker`): ambiente local de execucao da aplicacao PHP + MySQL
 
-## Status
+## Observacoes
 
-- ✅ Estrutura alinhada com MVC
-- ✅ Separacao entre frontend, backend e infraestrutura
-- ❌ Ainda sem modulo de autenticacao
+- O projeto segue arquitetura MVC no backend.
+- O banco inicial e criado a partir de `database.sql` no ambiente Docker.
+- Nao ha modulo de autenticacao (escopo da avaliacao tecnica).

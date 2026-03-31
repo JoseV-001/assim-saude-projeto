@@ -99,6 +99,7 @@ docker compose up --build
 - O banco e criado automaticamente na subida dos containers.
 - Nome do banco: `assim_saude`.
 - O arquivo `database.sql` e aplicado automaticamente na inicializacao do MySQL.
+- A carga inicial inclui 10 cargos e 50 funcionarios para testes.
 
 ## Observacoes importantes
 
